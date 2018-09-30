@@ -9,7 +9,7 @@ namespace HighScoreApi.Controllers
 {
     public class HighScoresController : ApiController
     {
-        HighScore[] highscores = new HighScore[]
+        HighScore[] highScores = new HighScore[]
         {
             new HighScore { Id = 1, Score = 1000, UserName = "Henk" },
             new HighScore { Id = 2, Score = 100, UserName = "Klaas" },
@@ -18,17 +18,24 @@ namespace HighScoreApi.Controllers
 
         public IEnumerable<HighScore> GetAllHighScores()
         {
-            return highscores;
+            return highScores;
         }
 
         public IHttpActionResult GetHighScore(int id)
         {
-            var highscore = highscores.FirstOrDefault((p) => p.Id == id);
+            var highscore = highScores.FirstOrDefault((p) => p.Id == id);
             if (highscore == null)
             {
                 return NotFound();
             }
             return Ok(highscore);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IHttpActionResult AddHighScore(string score, string userName)
+        {
+            return Ok();
         }
     }
 }
