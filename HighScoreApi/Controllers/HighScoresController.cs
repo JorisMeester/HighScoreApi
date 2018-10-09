@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Web.Http;
 
 namespace HighScoreApi.Controllers
@@ -23,19 +24,18 @@ namespace HighScoreApi.Controllers
 
         public IHttpActionResult GetHighScore(int id)
         {
-            var highscore = highScores.FirstOrDefault((p) => p.Id == id);
-            if (highscore == null)
+            var highScore = highScores.FirstOrDefault(p => p.Id == id);
+            if (highScore == null)
             {
                 return NotFound();
             }
-            return Ok(highscore);
+            return Ok(highScore);
         }
-
-        [Authorize]
+        
         [HttpPost]
-        public IHttpActionResult AddHighScore(string score, string userName)
+        public HttpResponseMessage PostHighScore(HighScore highScore)
         {
-            return Ok();
+            return new HttpResponseMessage(HttpStatusCode.OK);
         }
     }
 }
