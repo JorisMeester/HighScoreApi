@@ -33,9 +33,9 @@ namespace HighScoreApi.Controllers
         }
         
         [HttpPost]
-        public HttpResponseMessage PostHighScore(HighScore highScore)
+        public IHttpActionResult PostHighScore(string highScore)
         {
-            return new HttpResponseMessage(HttpStatusCode.OK);
+            return Ok(highScore);
         }
     }
 }

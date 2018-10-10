@@ -5,47 +5,64 @@
 </head>
 <body>
 
+    <div>
+        <h2>All HighScores</h2>
+        <ul id="highscores" />
+    </div>
+    <div>
+        <h2>Search by ID</h2>
+        <input type="text" id="hsId" size="5" />
+        <input type="button" value="Search" onclick="find();" />
+        <p id="highscore" />
+    </div>
+    
 <div>
-    <h2>All HighScores</h2>
-    <ul id="highscores" />
-</div>
-<div>
-    <h2>Search by ID</h2>
-    <input type="text" id="hsId" size="5" />
-    <input type="button" value="Search" onclick="find();" />
-    <p id="highscore" />
+    <h2>Post</h2>
+    <input type="button" value="Post" onclick="post();"/>
 </div>
 
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
-<script>
-    var uri = 'api/highScores';
+    <script>
+        var uri = 'api/highScores';
 
-    $(document).ready(function () {
-        // Send an AJAX request
-        $.getJSON(uri)
-            .done(function (data) {
-                // On success, 'data' contains a list of products.
-                $.each(data, function (key, item) {
-                    // Add a list item for the product.
-                    $('<li>', { text: formatItem(item) }).appendTo($('#highscores'));
+        $(document).ready(
+            function () {
+                // Send an AJAX request
+                $.getJSON(uri)
+                    .done(function (data) {
+                        // On success, 'data' contains a list of products.
+                        $.each(data, function (key, item) {
+                            // Add a list item for the product.
+                            $('<li>', { text: formatItem(item) }).appendTo($('#highscores'));
+                        });
+                    });
+            });
+
+        function formatItem(item) {
+            return item.Score + item.UserName;
+        }
+
+        function find() {
+            var id = $('#hsId').val();
+            $.getJSON(uri + '/' + id)
+                .done(function (data) {
+                    $('#highscore').text(formatItem(data));
+                })
+                .fail(function (jqXHR, textStatus, err) {
+                    $('#highscore').text('Error: ' + err);
                 });
-            });
-    });
+        }
 
-    function formatItem(item) {
-        return item.Score + item.UserName;
-    }
-
-    function find() {
-        var id = $('#hsId').val();
-        $.getJSON(uri + '/' + id)
-            .done(function (data) {
-                $('#highscore').text(formatItem(data));
-            })
-            .fail(function (jqXHR, textStatus, err) {
-                $('#highscore').text('Error: ' + err);
-            });
-    }
-</script>
+        $("button").click(function() {
+            $.post(uri,
+                {
+                    score: "bop"
+                },
+                function(data, status) {
+                    alert("Data: " + data + "\nStatus: " + status);
+                });
+        });
+        
+    </script>
 </body>
 </html>
