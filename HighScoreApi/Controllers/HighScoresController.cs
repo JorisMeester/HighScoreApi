@@ -31,11 +31,15 @@ namespace HighScoreApi.Controllers
             }
             return Ok(highScore);
         }
-        
-        [HttpPost]
-        public IHttpActionResult PostHighScore(string highScore)
+
+        //[HttpPost]
+        //public IHttpActionResult PostHighScore(string highScore)
+        //{
+        //    return Ok(highScore);
+        //}
+
+        public void Post(HighScore highScore)
         {
-            return Ok(highScore);
         }
     }
 }

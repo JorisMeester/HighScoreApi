@@ -18,7 +18,7 @@
     
 <div>
     <h2>Post</h2>
-    <input type="button" value="Post" onclick="post();"/>
+    <input id="postbutton" type="button" value="Post"/>
 </div>
 
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
@@ -53,15 +53,28 @@
                 });
         }
 
-        $("button").click(function() {
-            $.post(uri,
-                {
-                    score: "bop"
-                },
-                function(data, status) {
-                    alert("Data: " + data + "\nStatus: " + status);
+        //$("#postbutton").click(function() {
+        //    $.post(uri,
+        //        {
+        //            score: "bop"
+        //        },
+        //        function(data, status) {
+        //            alert("Data: " + data + "\nStatus: " + status);
+        //        });
+        //});
+
+        var dataJSON = { Score: "500", UserName: "Karel" };
+
+        $('#postbutton').click(
+            function() {
+                $.ajax({
+                    type: 'POST',
+                    url: uri,
+                    data: JSON.stringify(dataJSON),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json'
                 });
-        });
+            });
         
     </script>
 </body>
